@@ -5,8 +5,8 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/soolllv/densys_milestone2/database"
-	"github.com/soolllv/densys_milestone2/router"
+	"github.com/inabatatkanova/Software-engineering/database"
+	"github.com/inabatatkanova/Software-engineering/router"
 )
 
 func CreateServer() *fiber.App {

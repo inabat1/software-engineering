@@ -6,8 +6,8 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	"github.com/soolllv/densys_milestone2/database"
-	"github.com/soolllv/densys_milestone2/models"
+	"github.com/inabatatkanova/Software-engineering/database"
+	"github.com/inabatatkanova/Software-engineering/models"
 	"golang.org/x/crypto/bcrypt"
 )
 

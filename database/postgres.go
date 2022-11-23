@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/soolllv/densys_milestone2/models"
+	"github.com/inabatatkanova/Software-engineering/models"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"

@@ -1,4 +1,4 @@
-module github.com/soolllv/densys_milestone2
+module github.com/inabatatkanova/Software-engineering
 
 go 1.19
 
