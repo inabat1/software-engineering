@@ -16,7 +16,7 @@ type Doctor struct {
 	Photo          string     `json:"photo"`
 	Category       string     `json:"category"`
 	Price          string     `json:"price"`
-	Schedule       [5][14]int `json:"schedule"`
+	ScheduleM      [5][14]int `json:"schedule"`
 	Degree         string     `json:"degree"`
 	Rating         string     `json:"rating"`
 }
