@@ -22,4 +22,6 @@ func SetupRoutes(app *fiber.App) {
 	app.Post("/reg-admin", controllers.RegAdmin)
 	app.Get("/admin-page", controllers.AdminPage)
 	app.Post("/logout-admin", controllers.AdminLogout)
+	api.Get("/doctors-name/:name", controllers.SearchDocByName)
+	api.Get("/doctors-spec/:spec", controllers.SearchDocBySpec)
 }
