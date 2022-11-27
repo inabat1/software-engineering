@@ -1,0 +1,39 @@
+.app {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: url("https://catherineasquithgallery.com/uploads/posts/2021-02/1613316141_126-p-svetlo-sinii-tsvet-fon-165.jpg");
+    background-size: cover;
+    background-position: center; 
+  }
+  
+  form {
+    background-color: white;
+    padding: 0px 80px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+  
+  }
+  
+  h1 {
+    color: rgb(25, 64, 146);
+    text-align: center;
+  }
+  
+  button {
+    width: 40%;
+    height: 35px;
+    padding: 10px;
+    border: none;
+    background-color: rgb(20, 96, 194);
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-bottom: 30px;
+  }
+  
