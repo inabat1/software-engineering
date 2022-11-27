@@ -9,6 +9,7 @@ import (
 	"github.com/inabatatkanova/Software-engineering/database"
 	"github.com/inabatatkanova/Software-engineering/models"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 func RegisterUser(c *fiber.Ctx) error {
@@ -41,10 +42,6 @@ func RegisterUser(c *fiber.Ctx) error {
 func RegisterDoctor(c *fiber.Ctx) error {
 	var doctor models.Doctor
 
-	// scheduleByDef := [5][14]int{}
-
-	// doctor.Schedule = scheduleByDef
-
 	if err := c.BodyParser(&doctor); err != nil {
 		return err
 	}
@@ -69,27 +66,27 @@ func EditDoctor(c *fiber.Ctx) error {
 	curDoc.ID = uint(intVal)
 	database.DB.Take(&curDoc)
 
-	curDoc = changedDoc
-	// curDoc.Name = changedDoc.Name
-	// curDoc.Surname = data["surname"]
-	// curDoc.MiddleName = data["middleName"]
-	// curDoc.DataOfBirth = data["dateOfBirth"]
-	// curDoc.IIN_Number = data["iinNum"]
-	// curDoc.ID_Number = data["idNum"]
-	// curDoc.ContactNumber = data["contactNum"]
-	// curDoc.Address = data["address"]
-	// curDoc.Department = data["department"]
-	// curDoc.Specialization = data["specialization"]
-	// curDoc.Experience = data["experience"]
-	// curDoc.Photo = data["photo"]
-	// curDoc.Category = data["category"]
-	// curDoc.Price = data["price"]
-	// curDoc.Schedule = data["schedule"]
-	// curDoc.Degree = data["degree"]
-	// curDoc.Rating = data["rating"]
+	// curDoc = changedDoc
+	curDoc.Name = changedDoc.Name
+	curDoc.Surname = changedDoc.Surname
+	curDoc.MiddleName = changedDoc.MiddleName
+	curDoc.DataOfBirth = changedDoc.DataOfBirth
+	curDoc.IIN_Number = changedDoc.IIN_Number
+	curDoc.ID_Number = changedDoc.ID_Number
+	curDoc.ContactNumber = changedDoc.ContactNumber
+	curDoc.Address = changedDoc.Address
+	curDoc.Department = changedDoc.Department
+	curDoc.Specialization = changedDoc.Specialization
+	curDoc.Experience = changedDoc.Experience
+	curDoc.Photo = changedDoc.Photo
+	curDoc.Category = changedDoc.Category
+	curDoc.Price = changedDoc.Price
+	curDoc.Schedule = changedDoc.Schedule
+	curDoc.Degree = changedDoc.Degree
+	curDoc.Rating = changedDoc.Rating
 
-	// database.DB.Save(&curDoc)
-	return c.JSON(changedDoc)
+	database.DB.Session(&gorm.Session{FullSaveAssociations: true}).Updates(&curDoc)
+	return c.JSON(curDoc)
 }
 
 func RegAdmin(c *fiber.Ctx) error {
