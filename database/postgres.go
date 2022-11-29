@@ -33,7 +33,7 @@ func ConnectToDB() {
 		os.Exit(2)
 	}
 
-	DB.AutoMigrate(&models.User{}, &models.Doctor{}, &models.Admin{})
+	DB.AutoMigrate(&models.User{}, &models.Doctor{}, &models.Admin{}, &models.Schedules{})
 
 	log.Println("connected")
 }

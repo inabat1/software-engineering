@@ -183,9 +183,9 @@ func GetScheduleOfDoc(c *fiber.Ctx) error {
 }
 
 // func for request
-func GetAppointment(c *fiber.Ctx) error {
+func PostAppointment(c *fiber.Ctx) error {
 	var patient models.User
-	patient.Email = c.Params("email")
+	var doc models.Doctor
 
 	intVal, err := strconv.Atoi(c.Params("docId"))
 	if err != nil {
@@ -197,19 +197,78 @@ func GetAppointment(c *fiber.Ctx) error {
 		return err
 	}
 
-	database.DB.Take(&patient)
+	database.DB.Where("Email = ?", c.Params("email")).Take(&patient)
+	if patient.Email != c.Params("email") {
+		return c.JSON(fiber.Map{
+			"message": "Could not find user",
+		})
+	}
+
+	database.DB.Where("ID = ?", intVal).Take(&doc)
+	if intVal != int(doc.ID) {
+		return c.JSON(fiber.Map{
+			"message": "Could not find doctor",
+		})
+	}
 
 	var app models.Schedules
+
 	app.Approved = 0
+	app.DoctorName = doc.Name
+	app.DoctorSurname = doc.Surname
 	app.DoctorID = uint(intVal)
 	app.AppTime = uint(timeVal)
 	app.UserIIN = patient.IIN_Number
+	app.UserName = patient.Name
+	app.UserSurname = patient.Surname
 
 	database.DB.Create(&app)
 
 	return c.JSON(app)
 }
 
-//func to get req (Admin)
+// func to get req (Admin)
+func GetAppointment(c *fiber.Ctx) error {
+	var apps []models.Schedules
 
-//func to update req (Admin)
+	database.DB.Where("Approved = ?", 0).Find(&apps)
+
+	return c.JSON(apps)
+}
+
+// func to update req (Admin)
+func UpdateAppointment(c *fiber.Ctx) error {
+	var doc models.Doctor
+	var app models.Schedules
+
+	intVal, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		return err
+	}
+
+	app.ID = uint(intVal)
+	database.DB.Take(&app)
+
+	database.DB.Where("ID = ?", app.DoctorID).Take(&doc)
+
+	occ := 0
+
+	for i := 0; i <= int(app.AppTime); i++ {
+		if int(doc.Schedule[i]-'0') == 0 {
+			occ++
+		}
+	}
+
+	doc.Schedule = doc.Schedule[:app.AppTime] + "1" + doc.Schedule[app.AppTime+1:]
+
+	database.DB.Save(&doc)
+
+	app.Approved = 1
+
+	database.DB.Save(&app)
+
+	return c.JSON(fiber.Map{
+		"prev": doc.Schedule,
+		"cur":  app.Approved,
+	})
+}
