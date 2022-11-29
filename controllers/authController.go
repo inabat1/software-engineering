@@ -9,7 +9,6 @@ import (
 	"github.com/inabatatkanova/Software-engineering/database"
 	"github.com/inabatatkanova/Software-engineering/models"
 	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
 )
 
 func RegisterUser(c *fiber.Ctx) error {
@@ -51,43 +50,6 @@ func RegisterDoctor(c *fiber.Ctx) error {
 	return c.JSON(doctor)
 }
 
-func EditDoctor(c *fiber.Ctx) error {
-	// database.DB.First(c.Params("id"));
-	var changedDoc models.Doctor
-	if err := c.BodyParser(&changedDoc); err != nil {
-		return err
-	}
-
-	var curDoc models.Doctor
-	intVal, err := strconv.Atoi(c.Params("id"))
-	if err != nil {
-		return err
-	}
-	curDoc.ID = uint(intVal)
-	database.DB.Take(&curDoc)
-
-	// curDoc = changedDoc
-	curDoc.Name = changedDoc.Name
-	curDoc.Surname = changedDoc.Surname
-	curDoc.MiddleName = changedDoc.MiddleName
-	curDoc.DataOfBirth = changedDoc.DataOfBirth
-	curDoc.IIN_Number = changedDoc.IIN_Number
-	curDoc.ID_Number = changedDoc.ID_Number
-	curDoc.ContactNumber = changedDoc.ContactNumber
-	curDoc.Address = changedDoc.Address
-	curDoc.Department = changedDoc.Department
-	curDoc.Specialization = changedDoc.Specialization
-	curDoc.Experience = changedDoc.Experience
-	curDoc.Photo = changedDoc.Photo
-	curDoc.Category = changedDoc.Category
-	curDoc.Price = changedDoc.Price
-	curDoc.Schedule = changedDoc.Schedule
-	curDoc.Degree = changedDoc.Degree
-	curDoc.Rating = changedDoc.Rating
-
-	database.DB.Session(&gorm.Session{FullSaveAssociations: true}).Updates(&curDoc)
-	return c.JSON(curDoc)
-}
 
 func RegAdmin(c *fiber.Ctx) error {
 	var data map[string]string
