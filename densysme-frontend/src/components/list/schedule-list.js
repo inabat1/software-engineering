@@ -24,13 +24,13 @@ export const ScheduleList = () => {
     const[query, setQuery] = useState("")
     const [schedules, setSchedule] = useState([
     {
-        "name": "Pathetic",
+        "name": "static doctor",
         "specialization": "Surg",
         "appointment_day": "Wednesday",
         "available_time": "13:00"
     },
     {
-        "name": "Hatred",
+        "name": "static doctor 2",
         "specialization": "Eye",
         "appointment_day": "Wednesday",
         "available_time": "12:00"
@@ -157,7 +157,7 @@ export const ScheduleList = () => {
                        return (
 
                             <div className="wrapper">
-                                <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '70vh'}}>
+                                <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh'}}>
                             <Card className="card" sx={{ maxWidth: 345 }}>
                               <div className={classes.imageContainer}>
                                <img
