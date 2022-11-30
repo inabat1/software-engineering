@@ -153,7 +153,7 @@ func DeleteUser(c *fiber.Ctx) error {
 func GetTimeSlots(s string, x int) [7]int {
 	arr := [7]int{}
 	j := 0
-	for i := (x - 1) * 7; i < x*7; i++ {
+	for i := (x - 1) * 14; i < x*14; i++ {
 		arr[j] = int(s[i] - '0')
 		j++
 	}
