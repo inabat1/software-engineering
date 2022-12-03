@@ -28,4 +28,5 @@ func SetupRoutes(app *fiber.App) {
 	api.Post("/appointment/:email/:docId/:schd", controllers.PostAppointment)
 	api.Get("/admin/appointments", controllers.GetAppointment)
 	api.Post("/admin/appointment/:id", controllers.UpdateAppointment)
+	api.Post("/admin/appointment/reject/:id", controllers.RejectAppointment)
 }

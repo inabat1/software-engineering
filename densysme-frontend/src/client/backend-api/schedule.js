@@ -3,18 +3,40 @@ import axios from "axios";
 const ENDPOINT = "http://localhost:8000";
 
 export const ScheduleApi = {
-  getAllTimeSlots: async () => {
-    const res = await axios.get(ENDPOINT + "/api/schedule").then((r) => {
-      // console.log(res.data);
+  getTimeSlotsOfDoc: async (doctorId, day) => {
+    const res = await axios.get(ENDPOINT + "/api/doctor-data/" + doctorId + '/' + day).then((r) => {
       return r.data;
     });
     return res;
   },
-
-  deleteSchedule: async (doctorId) => {
-    const res = await axios.delete(ENDPOINT + `/api/schedule/${scheduleId}`).then((r)=>{
-        return r.status
+  addAnAppointment: async (email, doctorId, schd) =>{
+    await axios({
+      method: "post",
+      url: ENDPOINT + `/api/appointment/${email}/${doctorId}/${schd}`,
+    }).catch(err => {
+      console.error(err);
     })
-    return res
-}
+  },
+  getAllAppointments: async () =>{
+    const res = await axios.get(ENDPOINT + "/api/admin/appointments").then(r => {
+      return r.data;
+    })
+    return res;
+  },
+  confirmAppointment: async (id) =>{
+    await axios({
+      method: "post",
+      url: ENDPOINT + '/api/admin/appointment/' + id,
+    }).catch(err => {
+      console.error(err);
+    })
+  },
+  rejectAppointment: async (id) =>{
+    await axios({
+      method: "post",
+      url: ENDPOINT + '/api/admin/appointment/reject/' + id,
+    }).catch(err => {
+      console.error(err);
+    })
+  },
 };
