@@ -150,14 +150,13 @@ func DeleteUser(c *fiber.Ctx) error {
 	return nil
 }
 
-func GetTimeSlots(s string, x int) [7]int {
-	arr := [7]int{}
+func GetTimeSlots(s string, x int) [5]int {
+	arr := [5]int{}
 	j := 0
-	for i := (x - 1) * 14; i < x*14; i++ {
+	for i := (x - 1) * 5; i < x*5; i++ {
 		arr[j] = int(s[i] - '0')
 		j++
 	}
-
 	return arr
 }
 
@@ -192,10 +191,17 @@ func PostAppointment(c *fiber.Ctx) error {
 		return err
 	}
 
-	timeVal, err := strconv.Atoi(c.Params("schd"))
+	timeSlot, err := strconv.Atoi(c.Params("time"))
 	if err != nil {
 		return err
 	}
+
+	dayVal, err := strconv.Atoi(c.Params("day"))
+	if err != nil {
+		return err
+	}
+
+	timeVal := (dayVal-1)*5 + timeSlot
 
 	database.DB.Where("Email = ?", c.Params("email")).Take(&patient)
 	if patient.Email != c.Params("email") {
@@ -221,6 +227,10 @@ func PostAppointment(c *fiber.Ctx) error {
 	app.UserIIN = patient.IIN_Number
 	app.UserName = patient.Name
 	app.UserSurname = patient.Surname
+
+	doc.Schedule = doc.Schedule[:app.AppTime] + "3" + doc.Schedule[app.AppTime+1:]
+
+	database.DB.Save(&doc)
 
 	database.DB.Create(&app)
 
@@ -251,15 +261,35 @@ func UpdateAppointment(c *fiber.Ctx) error {
 
 	database.DB.Where("ID = ?", app.DoctorID).Take(&doc)
 
-	occ := 0
+	doc.Schedule = doc.Schedule[:app.AppTime] + "1" + doc.Schedule[app.AppTime+1:]
 
-	for i := 0; i <= int(app.AppTime); i++ {
-		if int(doc.Schedule[i]-'0') == 0 {
-			occ++
-		}
+	database.DB.Save(&doc)
+
+	app.Approved = 1
+
+	database.DB.Save(&app)
+
+	return c.JSON(fiber.Map{
+		"prev": doc.Schedule,
+		"cur":  app.Approved,
+	})
+}
+
+func RejectAppointment(c *fiber.Ctx) error {
+	var doc models.Doctor
+	var app models.Schedules
+
+	intVal, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		return err
 	}
 
-	doc.Schedule = doc.Schedule[:app.AppTime] + "1" + doc.Schedule[app.AppTime+1:]
+	app.ID = uint(intVal)
+	database.DB.Take(&app)
+
+	database.DB.Where("ID = ?", app.DoctorID).Take(&doc)
+
+	doc.Schedule = doc.Schedule[:app.AppTime] + "0" + doc.Schedule[app.AppTime+1:]
 
 	database.DB.Save(&doc)
 

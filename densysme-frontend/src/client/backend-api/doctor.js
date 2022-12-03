@@ -46,7 +46,26 @@ export const DoctorApi = {
         })
         return res
     },
+    // idk might need a debug
+    getDocByNameSpec: async (input) =>{
+        const requestOne = await axios.get(ENDPOINT + `/api/doctors-spec/` + input);
+        const requestTwo = await axios.get(ENDPOINT + `/api/doctors-name/` + input);
 
+        const res = await axios.all([requestOne, requestTwo]).then(axios.spread((...res)=>{
+            const dataOne = res[0].data
+            const dataTwo =  res[1].data
+
+            const dataCon = dataOne.concat(dataTwo);
+
+            return dataCon
+        })).catch(err =>{
+            console.error(err);
+        })
+
+        return res
+    },
+
+    
 }
 
 
