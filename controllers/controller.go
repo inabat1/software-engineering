@@ -150,14 +150,13 @@ func DeleteUser(c *fiber.Ctx) error {
 	return nil
 }
 
-func GetTimeSlots(s string, x int) [14]int {
-	arr := [14]int{}
+func GetTimeSlots(s string, x int) [5]int {
+	arr := [5]int{}
 	j := 0
-	for i := (x - 1) * 14; i < x*14; i++ {
+	for i := (x - 1) * 5; i < x*5; i++ {
 		arr[j] = int(s[i] - '0')
 		j++
 	}
-
 	return arr
 }
 
@@ -192,10 +191,17 @@ func PostAppointment(c *fiber.Ctx) error {
 		return err
 	}
 
-	timeVal, err := strconv.Atoi(c.Params("schd"))
+	timeSlot, err := strconv.Atoi(c.Params("time"))
 	if err != nil {
 		return err
 	}
+
+	dayVal, err := strconv.Atoi(c.Params("day"))
+	if err != nil {
+		return err
+	}
+
+	timeVal := (dayVal-1)*5 + timeSlot
 
 	database.DB.Where("Email = ?", c.Params("email")).Take(&patient)
 	if patient.Email != c.Params("email") {

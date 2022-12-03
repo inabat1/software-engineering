@@ -9,10 +9,10 @@ export const ScheduleApi = {
     });
     return res;
   },
-  addAnAppointment: async (email, doctorId, schd) =>{
+  addAnAppointment: async (email, doctorId, day, timeSlot) =>{
     await axios({
       method: "post",
-      url: ENDPOINT + `/api/appointment/${email}/${doctorId}/${schd}`,
+      url: ENDPOINT + `/api/appointment/${email}/${doctorId}/${day}/${timeSlot}`,
     }).catch(err => {
       console.error(err);
     })
