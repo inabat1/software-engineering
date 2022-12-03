@@ -88,7 +88,7 @@ export const Confirmation = () => {
           />
         ))}
       <label>
-        Pick your:
+        Pick available time slot:
         <select value={timeslot} onChange={onChangeForTimeSlot}>
           <option value="0">09:00</option>
           <option value="1">10:00</option>

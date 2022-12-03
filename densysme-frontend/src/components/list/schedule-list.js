@@ -26,16 +26,19 @@ export const ScheduleList = () => {
     {
         "name": "static doctor",
         "specialization": "Surg",
-        "appointment_day": "Wednesday",
-        "available_time": "13:00"
     },
     {
         "name": "static doctor 2",
         "specialization": "Eye",
-        "appointment_day": "Wednesday",
-        "available_time": "12:00"
     }
-    ])   
+    ])
+    const appointmentDay = {
+        value: '0'
+    }
+
+    const onChangeDay = (e) => {
+        appointmentDay.value = e.target.value
+    }
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const [openModal, setOpenModal] = useState(false)
@@ -102,8 +105,7 @@ export const ScheduleList = () => {
                                     <TableRow>
                                         <TableCell>Name</TableCell>
                                         <TableCell align="right">Specialization</TableCell>
-                                        <TableCell align="right">Appointment day</TableCell>
-                                        <TableCell align="right">Available time</TableCell>
+                                        <TableCell align="right">Appointment Day</TableCell>
                                         <TableCell>Action</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -117,8 +119,16 @@ export const ScheduleList = () => {
                                                 {schedule.name}
                                             </TableCell>
                                             <TableCell align="right">{schedule.specialization}</TableCell>
-                                            <TableCell align="right">{schedule.appointment_day}</TableCell>
-                                            <TableCell align="right">{schedule.available_time}</TableCell>
+                                            <TableCell align="right">
+                                                <select value={appointmentDay} onChange={onChangeDay}>
+                                                    <option value="0">Monday</option>
+                                                    <option value="1">Tuesday</option>
+                                                    <option value="2">Wednesday</option>
+                                                    <option value="3">Thursday</option>
+                                                    <option value="4">Friday</option>
+                                                </select>
+
+                                            </TableCell>
                                             <TableCell>
                                                 <div className={classes.actionsContainer}>
                                                  <Button
