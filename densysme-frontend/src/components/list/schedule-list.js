@@ -12,7 +12,7 @@ import {
     Typography
 } from "@mui/material";
 import {Link as RouterLink} from "react-router-dom";
-//import { ScheduleApi} from ".src/table/client/backend-api/schedule";
+//import { ScheduleApi} from ".src/table/client/backend-api/doctor";
 import { DoctorApi } from "../../client/backend-api/doctor"
 import * as React from 'react';
 import Card from '@mui/material/Card';
@@ -22,20 +22,7 @@ import CardMedia from '@mui/material/CardMedia';
 
 export const ScheduleList = () => {
     const[query, setQuery] = useState("")
-    const [schedules, setSchedule] = useState([
-    {
-        "name": "static doctor",
-        "specialization": "Surg",
-        "appointment_day": "Wednesday",
-        "available_time": "13:00"
-    },
-    {
-        "name": "static doctor 2",
-        "specialization": "Eye",
-        "appointment_day": "Wednesday",
-        "available_time": "12:00"
-    }
-    ])   
+    
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const [openModal, setOpenModal] = useState(false)
@@ -58,8 +45,8 @@ export const ScheduleList = () => {
 
 
     // const fetchSchedule = async () => {  
-    //     const schedules = await ScheduleApi.getAllTimeSlots()
-    //     setSchedule(schedules)
+    //     const doctors = await ScheduleApi.getAllTimeSlots()
+    //     setSchedule(doctors)
     // }
 
 
@@ -68,7 +55,7 @@ export const ScheduleList = () => {
     // }, [])
 
     const deleteSchedule = (scheduleId) => {
-        // if (schedule.length) {
+        // if (doctor.length) {
         //     ScheduleApi.deleteDoctor(scheduleId).then(({ success }) => {
         //         fetchSchedule().catch(console.error)
         //         setOpenModal(false)
@@ -90,7 +77,7 @@ export const ScheduleList = () => {
 
             </div>
             
-            {schedules.length > 0 ? (
+            {doctors.length > 0 ? (
                 
                 <>
                 
@@ -102,23 +89,21 @@ export const ScheduleList = () => {
                                     <TableRow>
                                         <TableCell>Name</TableCell>
                                         <TableCell align="right">Specialization</TableCell>
-                                        <TableCell align="right">Appointment day</TableCell>
-                                        <TableCell align="right">Available time</TableCell>
+                                        
                                         <TableCell>Action</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {((rowsPerPage > 0
-                                            ? schedules.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                            : schedules) &&  ((schedules.filter(schedule=>schedule.name.toLowerCase().includes(query) || schedule.specialization.toLowerCase().includes(query))) )
-                                    ).map((schedule) => (
-                                        <TableRow key={schedule.id}>
+                                            ? doctors.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                            : doctors) &&  ((doctors.filter(doctor=>doctor.name.toLowerCase().includes(query) || doctor.specialization.toLowerCase().includes(query))) )
+                                    ).map((doctor) => (
+                                        <TableRow key={doctor.id}>
                                             <TableCell component="th" scope="row">
-                                                {schedule.name}
+                                                {doctor.name}
                                             </TableCell>
-                                            <TableCell align="right">{schedule.specialization}</TableCell>
-                                            <TableCell align="right">{schedule.appointment_day}</TableCell>
-                                            <TableCell align="right">{schedule.available_time}</TableCell>
+                                            <TableCell align="right">{doctor.specialization}</TableCell>
+                                           
                                             <TableCell>
                                                 <div className={classes.actionsContainer}>
                                                  <Button
@@ -147,7 +132,7 @@ export const ScheduleList = () => {
                                 setPage(0)
                             }}
                             component="div"
-                            count={schedules.length}
+                            count={doctors.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={(e, newPage) => setPage(newPage)}
@@ -173,7 +158,7 @@ export const ScheduleList = () => {
                                 <Typography variant="body2" color="text.secondary">
                                 <b>  <p > Specialization:    {doctor.name}</p>
                                   <p> Contact Number:    {doctor.contactNum}</p>
-                                  <p> Schedule:    {doctor.schedule}</p>
+                                  <p> Schedule:    {doctor.doctor}</p>
                                   <p> Price:    {doctor.price}</p>
                                   <p> Rating:     {doctor.rating}</p>   </b>
                                 </Typography>
