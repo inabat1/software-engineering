@@ -2,13 +2,21 @@ import "./confirmation.css";
 import FormInput from "./component/FormInput";
 import { useState } from "react";
 
+
 export const Confirmation = () => {
   const [values, setValues] = useState({
     name: "",
     surname: "",
     email: "",
-    phonenumber: ""
+    phonenumber: "",
+    timeslot: ""
   });
+
+
+  const timeslot = {
+      value: '12:00'
+  }
+
 
   const inputs = [
     {
@@ -62,6 +70,10 @@ export const Confirmation = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+  const onChangeForTimeSlot = (e) => {
+    timeslot.value = e.target.value
+  }
+
   console.log(values);
   return (
     <div className="app">
@@ -75,8 +87,19 @@ export const Confirmation = () => {
             onChange={onChange}
           />
         ))}
+      <label>
+        Pick available time slot:
+        <select value={timeslot} onChange={onChangeForTimeSlot}>
+          <option value="0">09:00</option>
+          <option value="1">10:00</option>
+          <option value="2">11:00</option>
+          <option value="3">12:00</option>
+          <option value="4">13:00</option>6
+        </select>
+      </label>
         <button> Confirm </button>
       </form>
+
     </div>
   );
 }

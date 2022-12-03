@@ -28,7 +28,6 @@ import {DoctorsDetails} from "../details/doctors_details";
 import { ScheduleList } from "../list/schedule-list";
 import { Confirmation} from "../details/confirmation";
 
-
 export  const AppLayout = () => {
     const [openLoginDialog, setOpenLoginDialog] = useState(false)
     const [anchorElUser, setAnchorElUser] = useState(null)
