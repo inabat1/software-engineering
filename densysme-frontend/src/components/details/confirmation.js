@@ -1,6 +1,7 @@
 import "./confirmation.css";
 import FormInput from "./component/FormInput";
 import { useState } from "react";
+import classes from "../list/styles.module.css";
 
 
 export const Confirmation = () => {
@@ -87,8 +88,8 @@ export const Confirmation = () => {
                   onChange={onChange}
               />
           ))}
-          <label>
-            Pick available time slot:
+          <label className={classes.actionsContainer}>
+            Pick available time slot
             <select value={timeslot} onChange={onChangeForTimeSlot}>
               <option value="0">09:00</option>
               <option value="1">10:00</option>

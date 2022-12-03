@@ -22,16 +22,7 @@ import CardMedia from '@mui/material/CardMedia';
 
 export const ScheduleList = () => {
     const[query, setQuery] = useState("")
-    const [schedules, setSchedule] = useState([
-        {
-            "name": "static doctor",
-            "specialization": "Surg",
-        },
-        {
-            "name": "static doctor 2",
-            "specialization": "Eye",
-        }
-    ])
+    const [schedules, setSchedule] = useState([])
     const appointmentDay = {
         value: '0'
     }
@@ -48,9 +39,14 @@ export const ScheduleList = () => {
     const [error,setError] = useState()
 
     const fetchDoctors = async () => {
-        // !! UNCOMMENT!!
         const doctors = await DoctorApi.getAllDoctors()
         setDoctors(doctors)
+
+        setSchedule(doctors.map(doctor =>({
+            "name": doctor.name + doctor.surname,
+            "specialization": doctor.specialization
+        })))
+
     }
 
     useEffect(() => {

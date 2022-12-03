@@ -1,15 +1,12 @@
-import { DoctorApi } from "../../client/backend-api/doctor"
-import { useUser } from "../../context/user-context"
+import {DoctorApi} from "../../client/backend-api/doctor"
 import classes from "./styles.module.css"
 import {useEffect, useState} from "react";
-import { NotificationManager } from "react-notifications"
-import { useParams, useNavigate, Link as RouterLink } from "react-router-dom"
+import {NotificationManager} from "react-notifications"
+import {Link as RouterLink, useNavigate, useParams} from "react-router-dom"
 import {Button, Card, CardActions, CardContent, Table, TableBody, TableCell, TableRow, Typography} from "@mui/material";
-import {Image} from "@mui/icons-material";
-import axios from "axios"
 
-export const DoctorsDetails= () => {
-    const { doctorId } = useParams()
+export const DoctorsDetails = () => {
+    const {doctorId} = useParams()
     const navigate = useNavigate()
     const [doctor, setDoctor] = useState(null)         //set to null & remove mock data
 
@@ -18,7 +15,7 @@ export const DoctorsDetails= () => {
         if (doctorId) {
             DoctorApi
                 .getDoctorById(doctorId)
-                .then(( doctor, error ) => {
+                .then((doctor, error) => {
                     if (error) {
                         NotificationManager.error(error)
                     } else {
@@ -33,7 +30,7 @@ export const DoctorsDetails= () => {
     return (
         doctor && (
             <div className={classes.wrapper}>
-                <Typography variant="h5" align="center" style={{ marginBottom: 20 }}>
+                <Typography variant="h5" align="center" style={{marginBottom: 20}}>
                     {doctor.name}
                 </Typography>
                 <Card>
@@ -121,7 +118,7 @@ export const DoctorsDetails= () => {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell variant="head" component="th">
-                                       Homepage
+                                        Homepage
                                     </TableCell>
                                     <TableCell>{doctor.homepage}</TableCell>
                                 </TableRow>
