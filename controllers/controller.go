@@ -150,8 +150,8 @@ func DeleteUser(c *fiber.Ctx) error {
 	return nil
 }
 
-func GetTimeSlots(s string, x int) [7]int {
-	arr := [7]int{}
+func GetTimeSlots(s string, x int) [14]int {
+	arr := [14]int{}
 	j := 0
 	for i := (x - 1) * 14; i < x*14; i++ {
 		arr[j] = int(s[i] - '0')
@@ -222,6 +222,10 @@ func PostAppointment(c *fiber.Ctx) error {
 	app.UserName = patient.Name
 	app.UserSurname = patient.Surname
 
+	doc.Schedule = doc.Schedule[:app.AppTime] + "3" + doc.Schedule[app.AppTime+1:]
+
+	database.DB.Save(&doc)
+
 	database.DB.Create(&app)
 
 	return c.JSON(app)
@@ -251,15 +255,35 @@ func UpdateAppointment(c *fiber.Ctx) error {
 
 	database.DB.Where("ID = ?", app.DoctorID).Take(&doc)
 
-	occ := 0
+	doc.Schedule = doc.Schedule[:app.AppTime] + "1" + doc.Schedule[app.AppTime+1:]
 
-	for i := 0; i <= int(app.AppTime); i++ {
-		if int(doc.Schedule[i]-'0') == 0 {
-			occ++
-		}
+	database.DB.Save(&doc)
+
+	app.Approved = 1
+
+	database.DB.Save(&app)
+
+	return c.JSON(fiber.Map{
+		"prev": doc.Schedule,
+		"cur":  app.Approved,
+	})
+}
+
+func RejectAppointment(c *fiber.Ctx) error {
+	var doc models.Doctor
+	var app models.Schedules
+
+	intVal, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		return err
 	}
 
-	doc.Schedule = doc.Schedule[:app.AppTime] + "1" + doc.Schedule[app.AppTime+1:]
+	app.ID = uint(intVal)
+	database.DB.Take(&app)
+
+	database.DB.Where("ID = ?", app.DoctorID).Take(&doc)
+
+	doc.Schedule = doc.Schedule[:app.AppTime] + "0" + doc.Schedule[app.AppTime+1:]
 
 	database.DB.Save(&doc)
 
