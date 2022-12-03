@@ -1,10 +1,19 @@
 import "./confirmation.css";
 import FormInput from "./component/FormInput";
-import { useState } from "react";
+import * as React from "react";
+import {useEffect, useState} from "react";
 import classes from "../list/styles.module.css";
+import {useNavigate, useParams} from "react-router-dom";
+import {ScheduleApi} from "../../client/backend-api/schedule";
+import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 
 
-export const Confirmation = () => {
+export const Confirmation = (effect, deps) => {
+  const {doctorId, appointmentDay} = useParams()
+  const navigate = useNavigate()
+
+  const [timeslots, setTimeslots] = useState([]); //default value
+
   const [values, setValues] = useState({
     name: "",
     surname: "",
@@ -14,9 +23,7 @@ export const Confirmation = () => {
   });
 
 
-  const timeslot = {
-    value: '12:00'
-  }
+  const [selectedSlot, setSelectedSlot] = useState('')
 
 
   const inputs = [
@@ -63,6 +70,16 @@ export const Confirmation = () => {
     }
   ];
 
+  const fetchTimeslots = async (doctorId, appointmentDay) => {
+    const timeslots = await ScheduleApi.getTimeSlotsOfDoc(doctorId, appointmentDay)
+    setTimeslots(timeslots)
+  }
+
+  useEffect(() => {
+    fetchTimeslots(doctorId, appointmentDay).catch(console.error)
+  }, [doctorId, appointmentDay])
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -71,11 +88,13 @@ export const Confirmation = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const onChangeForTimeSlot = (e) => {
-    timeslot.value = e.target.value
-  }
+  const handleChange = (event) => {
+    setSelectedSlot(event.target.value);
+  };
 
-  console.log(values);
+
+  //
+  // console.log(values);
   return (
       <div className="app">
         <form on Submit={handleSubmit}>
@@ -89,14 +108,33 @@ export const Confirmation = () => {
               />
           ))}
           <label className={classes.actionsContainer}>
-            Pick available time slot
-            <select value={timeslot} onChange={onChangeForTimeSlot}>
-              <option value="0">09:00</option>
-              <option value="1">10:00</option>
-              <option value="2">11:00</option>
-              <option value="3">12:00</option>
-              <option value="4">13:00</option>6
-            </select>
+            Select a timeslot
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Age</InputLabel>
+              <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selectedSlot}
+                  label="Age"
+                  onChange={handleChange}
+              >
+                {!timeslots[0] && (
+                    <MenuItem value={0}>09:00</MenuItem>
+                )}
+                {!timeslots[1] && (
+                    <MenuItem value={1}>10:00</MenuItem>
+                )}
+                {!timeslots[2] && (
+                    <MenuItem value={2}>11:00</MenuItem>
+                )}
+                {!timeslots[3] && (
+                    <MenuItem value={3}>12:00</MenuItem>
+                )}
+                {!timeslots[4] && (
+                    <MenuItem value={4}>13:00</MenuItem>
+                )}
+              </Select>
+            </FormControl>
           </label>
           <button> Confirm </button>
         </form>

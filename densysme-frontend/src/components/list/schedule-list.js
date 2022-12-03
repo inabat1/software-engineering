@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import classes from "./styles.module.css";
 import {
-    Button,
-    Paper,
+    Button, FormControl, InputLabel, MenuItem,
+    Paper, Select,
     Table,
     TableBody,
     TableCell,
@@ -12,7 +12,6 @@ import {
     Typography
 } from "@mui/material";
 import {Link as RouterLink} from "react-router-dom";
-//import { ScheduleApi} from ".src/table/client/backend-api/schedule";
 import { DoctorApi } from "../../client/backend-api/doctor"
 import * as React from 'react';
 import Card from '@mui/material/Card';
@@ -23,13 +22,12 @@ import CardMedia from '@mui/material/CardMedia';
 export const ScheduleList = () => {
     const[query, setQuery] = useState("")
     const [schedules, setSchedule] = useState([])
-    const appointmentDay = {
-        value: '0'
+    const [selectedDay, setSelectedDay] = useState('')
+
+    const handleChange = (event) => {
+        setSelectedDay(event.target.value)
     }
 
-    const onChangeDay = (e) => {
-        appointmentDay.value = e.target.value
-    }
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const [openModal, setOpenModal] = useState(false)
@@ -43,6 +41,7 @@ export const ScheduleList = () => {
         setDoctors(doctors)
 
         setSchedule(doctors.map(doctor =>({
+            "id": doctor.id,
             "name": doctor.name + doctor.surname,
             "specialization": doctor.specialization
         })))
@@ -116,13 +115,23 @@ export const ScheduleList = () => {
                                             </TableCell>
                                             <TableCell align="right">{schedule.specialization}</TableCell>
                                             <TableCell align="right">
-                                                <select value={appointmentDay} onChange={onChangeDay}>
-                                                    <option value="0">Monday</option>
-                                                    <option value="1">Tuesday</option>
-                                                    <option value="2">Wednesday</option>
-                                                    <option value="3">Thursday</option>
-                                                    <option value="4">Friday</option>
-                                                </select>
+                                                <FormControl fullWidth>
+                                                    <InputLabel id="demo-simple-select-label">Day</InputLabel>
+                                                    <Select
+                                                        labelId="demo-simple-select-label"
+                                                        id="demo-simple-select"
+                                                        value={selectedDay}
+                                                        label="Age"
+                                                        onChange={handleChange}
+                                                    >
+                                                        <MenuItem value={1}>Monday</MenuItem>
+                                                        <MenuItem value={2}>Tuesday</MenuItem>
+                                                        <MenuItem value={3}>Wednesday</MenuItem>
+                                                        <MenuItem value={4}>Thursday</MenuItem>
+                                                        <MenuItem value={5}>Friday</MenuItem>
+
+                                                    </Select>
+                                                </FormControl>
 
                                             </TableCell>
                                             <TableCell>
@@ -131,15 +140,10 @@ export const ScheduleList = () => {
                                                         variant="contained"
                                                         component={RouterLink}
                                                         size="small"
-                                                        to={`/admin/confirmation`}
-
+                                                        to={`/admin/confirmation/${schedule.id}/${selectedDay}`}
                                                     >
                                                         Get Appointment
                                                     </Button>
-                                                </div>
-                                            </TableCell>
-                                            <TableCell>
-                                                <div className={classes.actionsContainer}>
                                                 </div>
                                             </TableCell>
                                         </TableRow>
