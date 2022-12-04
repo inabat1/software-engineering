@@ -250,6 +250,7 @@ func GetAppointment(c *fiber.Ctx) error {
 func UpdateAppointment(c *fiber.Ctx) error {
 	var doc models.Doctor
 	var app models.Schedules
+	var treat models.Treatments
 
 	intVal, err := strconv.Atoi(c.Params("id"))
 	if err != nil {
@@ -268,6 +269,15 @@ func UpdateAppointment(c *fiber.Ctx) error {
 	app.Approved = 1
 
 	database.DB.Save(&app)
+
+	treat.DoctorId = doc.ID
+	treat.UserIIN = app.UserIIN
+	treat.UserName = app.UserName
+	treat.UserSurname = app.UserSurname
+	treat.DoctorName = app.DoctorName
+	treat.DoctorSurname = app.DoctorSurname
+
+	database.DB.Create(&treat)
 
 	return c.JSON(fiber.Map{
 		"prev": doc.Schedule,
