@@ -89,6 +89,17 @@ export const MainPage = () => {
                         <PeopleIcon/>
                     </IconButton>
                 </Item>
+                <Item>
+                    <Typography>
+                        Confirm appointment
+                    </Typography>
+                    <IconButton
+                        aria-label="doctors"
+                        component={RouterLink}
+                        to={'admin/confirmlist'}>
+                        <PeopleIcon/>
+                    </IconButton>
+                </Item>
             </Box>
         </div>
     );
