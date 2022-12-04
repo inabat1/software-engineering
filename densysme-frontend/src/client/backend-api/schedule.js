@@ -3,7 +3,9 @@ import axios from "axios";
 const ENDPOINT = "http://localhost:8000";
 
 export const ScheduleApi = {
+  
   getTimeSlotsOfDoc: async (doctorId, day) => {
+    console.log(doctorId)
     const res = await axios.get(ENDPOINT + "/api/doctor-data/" + doctorId + '/' + day).then((r) => {
       return r.data;
     });

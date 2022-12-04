@@ -166,7 +166,7 @@ export  const AppLayout = () => {
              }
 />
                 <Route 
-                   path="admin/confirmation" 
+                   path="admin/confirmation/:doctorId/:appointmentDay" 
                    element={<Confirmation/>}
                 />
                 <Route
