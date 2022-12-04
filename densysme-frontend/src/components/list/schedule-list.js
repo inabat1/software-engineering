@@ -115,7 +115,7 @@ export const ScheduleList = () => {
                                             </TableCell>
                                             <TableCell align="right">{schedule.specialization}</TableCell>
                                             <TableCell align="right">
-                                                <FormControl fullWidth>
+                                                <FormControl fullWidth required={true}>
                                                     <InputLabel id="demo-simple-select-label">Day</InputLabel>
                                                     <Select
                                                         labelId="demo-simple-select-label"

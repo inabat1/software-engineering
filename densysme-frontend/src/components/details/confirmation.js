@@ -86,9 +86,11 @@ export const Confirmation = (effect, deps) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(values.email, doctorId, appointmentDay, selectedSlot)
     addAnAppointment(values.email, doctorId, appointmentDay, selectedSlot).then(r =>
         console.log(r)
     )
+      navigate(`/admin/schedule`)
   };
 
   const onChange = (e) => {
@@ -97,15 +99,12 @@ export const Confirmation = (effect, deps) => {
 
   const handleChange = (event) => {
     setSelectedSlot(event.target.value);
-    console.log(selectedSlot)
-    values.timeslot = selectedSlot
+    values.timeslot = event.target.value
   };
 
-
- console.log(values);
   return (
       <div className="app">
-        <form on Submit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <h1>Confirmation</h1>
           {inputs.map((input) => (
               <FormInput
@@ -117,7 +116,7 @@ export const Confirmation = (effect, deps) => {
           ))}
           <label className={classes.actionsContainer}>
             Select a timeslot
-            <FormControl fullWidth>
+            <FormControl fullWidth required={true}>
               <InputLabel id="demo-simple-select-label">Slot</InputLabel>
               <Select
                   labelId="demo-simple-select-label"
@@ -127,19 +126,19 @@ export const Confirmation = (effect, deps) => {
                   onChange={handleChange}
               >
                 {!timeslots[0] && (
-                    <MenuItem value={0}>09:00</MenuItem>
+                    <MenuItem value={'0'}>09:00</MenuItem>
                 )}
                 {!timeslots[1] && (
-                    <MenuItem value={1}>10:00</MenuItem>
+                    <MenuItem value={'1'}>10:00</MenuItem>
                 )}
                 {!timeslots[2] && (
-                    <MenuItem value={2}>11:00</MenuItem>
+                    <MenuItem value={'2'}>11:00</MenuItem>
                 )}
                 {!timeslots[3] && (
-                    <MenuItem value={3}>12:00</MenuItem>
+                    <MenuItem value={'3'}>12:00</MenuItem>
                 )}
                 {!timeslots[4] && (
-                    <MenuItem value={4}>13:00</MenuItem>
+                    <MenuItem value={'4'}>13:00</MenuItem>
                 )}
               </Select>
             </FormControl>
