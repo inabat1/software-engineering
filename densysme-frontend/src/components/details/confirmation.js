@@ -75,6 +75,10 @@ export const Confirmation = (effect, deps) => {
     setTimeslots(timeslots)
   }
 
+  const addAnAppointment = async(email, doctorId, day, timeSlot) => {
+    await ScheduleApi.addAnAppointment(email, doctorId, day, timeSlot)
+  }
+
   useEffect(() => {
     fetchTimeslots(doctorId, appointmentDay).catch(console.error)
   }, [doctorId, appointmentDay])
@@ -82,6 +86,9 @@ export const Confirmation = (effect, deps) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    addAnAppointment(values.email, doctorId, appointmentDay, selectedSlot).then(r =>
+        console.log(r)
+    )
   };
 
   const onChange = (e) => {
@@ -90,11 +97,12 @@ export const Confirmation = (effect, deps) => {
 
   const handleChange = (event) => {
     setSelectedSlot(event.target.value);
+    console.log(selectedSlot)
+    values.timeslot = selectedSlot
   };
 
 
-  //
-  // console.log(values);
+ console.log(values);
   return (
       <div className="app">
         <form on Submit={handleSubmit}>
@@ -110,12 +118,12 @@ export const Confirmation = (effect, deps) => {
           <label className={classes.actionsContainer}>
             Select a timeslot
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Age</InputLabel>
+              <InputLabel id="demo-simple-select-label">Slot</InputLabel>
               <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={selectedSlot}
-                  label="Age"
+                  label="Slot"
                   onChange={handleChange}
               >
                 {!timeslots[0] && (
