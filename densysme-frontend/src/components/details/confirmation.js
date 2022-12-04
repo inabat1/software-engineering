@@ -11,7 +11,6 @@ import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 export const Confirmation = (effect, deps) => {
   const {doctorId, appointmentDay} = useParams()
   const navigate = useNavigate()
-
   const [timeslots, setTimeslots] = useState([]); //default value
 
   const [values, setValues] = useState({
