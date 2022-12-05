@@ -1,20 +1,19 @@
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import {useEffect, useState} from "react"
+import {Link, Route, Routes, useNavigate} from "react-router-dom"
 import {
     AppBar,
-    Box,
-    Toolbar,
-    IconButton,
-    Typography,
-    Menu,
-    Container,
     Avatar,
+    Box,
     Button,
-    Tooltip,
+    Container,
+    IconButton,
+    Menu,
     MenuItem,
+    Toolbar,
+    Tooltip,
+    Typography,
 } from "@mui/material"
-import { useUser } from "../../context/user-context"
-import { Route, Routes, Navigate, Link } from "react-router-dom"
+import {useUser} from "../../context/user-context"
 import AdbIcon from "@mui/icons-material/Adb"
 import {PatientsList} from "../list/patients-list";
 import {DoctorsList} from "../list/doctors-list";
@@ -25,8 +24,9 @@ import {MainPage} from "../../main_page";
 import {DoctorForm} from "../register-form/doctor-form";
 import {PatientsDetails} from "../details/patients_details";
 import {DoctorsDetails} from "../details/doctors_details";
-import { ScheduleList } from "../list/schedule-list";
-import { Confirmation} from "../details/confirmation";
+import {ScheduleList} from "../list/schedule-list";
+import {Confirmation} from "../details/confirmation";
+import {MainPageForPatient} from "../main-pages/mainpage-for-patient";
 
 
 export  const AppLayout = () => {
@@ -41,6 +41,11 @@ export  const AppLayout = () => {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null)
+        navigate("/")
+    }
+
+    const navigateToPersonalPage = () => {
+        //vremenno
         navigate("/")
     }
 
@@ -113,6 +118,9 @@ export  const AppLayout = () => {
                                         open={Boolean(anchorElUser)}
                                         onClose={handleCloseUserMenu}
                                     >
+                                        <MenuItem onClick={navigateToPersonalPage}>
+                                            <Typography textAlign="center">Personal page</Typography>
+                                        </MenuItem>
                                         <MenuItem onClick={handleCloseUserMenu}>
                                             <Typography textAlign="center">Dashboard</Typography>
                                         </MenuItem>
@@ -149,9 +157,8 @@ export  const AppLayout = () => {
                        exact
                 />
                 <Route path="admin/schedule" element={
-                    <ScheduleList/>
-             }
-/>
+                    <ScheduleList/>}
+                />
                 <Route 
                    path='/admin/confirmation/:doctorId/:appointmentDay'
                    element={<Confirmation/>}
@@ -179,6 +186,10 @@ export  const AppLayout = () => {
                 <Route
                     path="/admin/doctors/:doctorId/edit"
                     element={<DoctorForm />}
+                />
+                <Route
+                    path="/patient/mainpage"
+                    element={<MainPageForPatient/>}
                 />
 
             </Routes>

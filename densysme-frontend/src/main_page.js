@@ -100,6 +100,17 @@ export const MainPage = () => {
                         <PeopleIcon/>
                     </IconButton>
                 </Item>
+                <Item>
+                    <Typography>
+                        History
+                    </Typography>
+                    <IconButton
+                        aria-label="doctors"
+                        component={RouterLink}
+                        to={'patient/mainpage'}>
+                        <PeopleIcon/>
+                    </IconButton>
+                </Item>
             </Box>
         </div>
     );
