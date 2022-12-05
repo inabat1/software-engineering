@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import {IconButton, Typography} from "@mui/material";
 import PeopleIcon from '@mui/icons-material/People';
+import CheckIcon from '@mui/icons-material/Check';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
+import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import {Link as RouterLink} from "react-router-dom"
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 function Item(props) {
     const { sx, ...other } = props;
@@ -41,7 +43,7 @@ Item.propTypes = {
     ]),
 };
 
-export const MainPage = () => {
+export const MainPageForAdmin = () => {
 
     return (
         <div style={{ width: '90%', margin: '30px' }} >
@@ -55,13 +57,49 @@ export const MainPage = () => {
             >
                 <Item>
                     <Typography>
-                        Schedule appointment
+                        Patients
                     </Typography>
                     <IconButton
                         aria-label="doctors"
                         component={RouterLink}
-                        to={'admin/schedule'}>
-                        <PersonAddIcon/>
+                        to={'patients'}>
+                        <PeopleIcon/>
+                    </IconButton>
+
+                </Item>
+                <Item>
+                    <Typography>
+                        Doctors
+                    </Typography>
+                    <IconButton
+                        aria-label="doctors"
+                        component={RouterLink}
+                        to={'doctors'}
+                    >
+                        <MedicalServicesIcon/>
+                    </IconButton>
+
+                </Item>
+                <Item>
+                    <Typography>
+                        Confirm appointment
+                    </Typography>
+                    <IconButton
+                        aria-label="doctors"
+                        component={RouterLink}
+                        to={'confirmlist'}>
+                        <CheckIcon/>
+                    </IconButton>
+                </Item>
+                <Item>
+                    <Typography>
+                        Records
+                    </Typography>
+                    <IconButton
+                        aria-label="doctors"
+                        component={RouterLink}
+                        to={'records'}>
+                        <BookmarksIcon/>
                     </IconButton>
                 </Item>
             </Box>

@@ -36,7 +36,7 @@ export const RecordsOfAllDocs = () => {
     return(
         <>
             <div className={`${classes.pageHeader} ${classes.mb2} `}>
-                <Typography variant="h5" > History</Typography>
+                <Typography variant="h5" > Records</Typography>
                 <ReactToPrint
                     trigger={()=>{
                         return <Button

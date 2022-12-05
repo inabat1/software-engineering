@@ -29,6 +29,7 @@ import {Confirmation} from "../details/confirmation";
 import {MainPageForPatient} from "../main-pages/mainpage-for-patient";
 import { RecordsOfAllDocs } from "../list/records-list"
 import { ConfirmList } from "../list/confirm-list"
+import {MainPageForAdmin} from "../main-pages/mainpage-for-admin";
 
 
 export  const AppLayout = () => {
@@ -79,7 +80,7 @@ export  const AppLayout = () => {
         } else if(index === 1) {
             // for doctor
         } else if(index === 2){
-            // for admin
+            navigate("/admin/")
         } else {
             console.log("for ")
             navigate('/')
@@ -218,11 +219,11 @@ export  const AppLayout = () => {
                 />
                 <Route
                     path="/admin/records"
-                    element={
-                        <WithLoginProtector>
-                            <RecordsOfAllDocs/>
-                        </WithLoginProtector>
-                    }
+                    element={<RecordsOfAllDocs/>}
+                />
+                <Route
+                    path="/admin"
+                    element={<MainPageForAdmin/>}
                 />
 
             </Routes>
