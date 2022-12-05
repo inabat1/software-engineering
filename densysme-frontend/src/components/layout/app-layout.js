@@ -33,6 +33,8 @@ export  const AppLayout = () => {
     const [openLoginDialog, setOpenLoginDialog] = useState(false)
     const [anchorElUser, setAnchorElUser] = useState(null)
     const { user, loginUser, logoutUser} = useUser()
+    const [index, setIndex] = useState(null)
+    const [response, setResponse] = useState("")
     const navigate = useNavigate()
 
     const handleOpenUserMenu = (event) => {
@@ -47,10 +49,13 @@ export  const AppLayout = () => {
     const navigateToPersonalPage = () => {
         //vremenno
         navigate("/")
+        handleCloseUserMenu()
     }
 
-    const handleLoginSubmit = (username, password, index) => {
-        loginUser(username, password, index)
+    const handleLoginSubmit = async (username, password, index) => {
+        setIndex(index)
+        const response = await loginUser(username, password, index)
+        setResponse(response)
         setOpenLoginDialog(false)
     }
 
@@ -60,11 +65,23 @@ export  const AppLayout = () => {
 
     const handleLogout = () => {
         logoutUser()
-       handleCloseUserMenu()
+        setIndex(null)
+        handleCloseUserMenu()
     }
 
     useEffect(() => {
-        navigate('/')
+        console.log(index)
+        if(index === 0) {
+            navigate(`/patient/${response}`)
+            console.log("for patient")
+        } else if(index === 1) {
+            // for doctor
+        } else if(index === 2){
+            // for admin
+        } else {
+            console.log("for ")
+            navigate('/')
+        }
     }, [user])
 
     return(
@@ -188,7 +205,7 @@ export  const AppLayout = () => {
                     element={<DoctorForm />}
                 />
                 <Route
-                    path="/patient/mainpage"
+                    path="/patient/:patientId"
                     element={<MainPageForPatient/>}
                 />
 

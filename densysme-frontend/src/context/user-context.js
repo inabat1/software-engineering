@@ -25,18 +25,20 @@ const UserProvider = ( {children} ) => {
     }, [])
 
     const loginUser = async (username, password, index) => {
+        let response = null
         if(index === 0) {
             await UserApi.userLogin(username, password).then(r =>{
                 NotificationManager.success("Logged in successfully!")
                 setUser(r.data)
+                response = r.data
             }).catch(error =>{
                 NotificationManager.error(error)
             })
-
         } else if(index === 1) {
             await UserApi.docLogin(username, password).then(r =>{
                 NotificationManager.success("Logged in successfully!")
                 setUser(r.data)
+                response = r.data
             }).catch(error =>{
                 NotificationManager.error(error)
             })
@@ -44,10 +46,12 @@ const UserProvider = ( {children} ) => {
             await UserApi.login(username, password).then(r =>{
                 NotificationManager.success("Logged in successfully!")
                 setUser(r.data)
+                response = r.data
             }).catch(error =>{
                 NotificationManager.error(error)
             })
         }
+        return response
     }
 
     const logoutUser = async () => {

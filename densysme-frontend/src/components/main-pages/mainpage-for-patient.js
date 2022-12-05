@@ -15,27 +15,20 @@ import {
 } from "@mui/material";
 import ReactToPrint from "react-to-print";
 import { TreatmentApi } from "../../client/backend-api/treatment";
+import {useParams} from "react-router-dom";
 
 export const MainPageForPatient = () => {
+    const patientId = useParams()
     let componentref = useRef()
-    const [appointments, setAppointments] = useState([
-        {   "ID":  "123",
-            "UserName": "hasoos",
-            "UserSurname": "jasn",
-            "UserIIN": "456",
-            "DoctorId " : "789",
-            "DoctorName": "Tom",
-            "DoctorSurname": "Alison",
-            "Treat": "paracetomol",
-        "Date": "12/12/22"}
-    ])       //change to []
+    const [appointments, setAppointments] = useState([])       //change to []
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(10)
 
     const fetchHistory = async () => {
         // !! UNCOMMENT!!
-        // const appointments = await TreatmentApi.getHistoryOfPatient()
-        // setAppointments(appointments)
+        console.log(patientId)
+        const appointments = await TreatmentApi.getHistoryOfPatient(patientId.patientId)
+        setAppointments(appointments)
     }
 
 
@@ -85,10 +78,10 @@ export const MainPageForPatient = () => {
                                     ).map((appointment) => (
                                         <TableRow key={appointment.ID}>
                                             <TableCell component="th" scope="row">
-                                                {appointment.Date}
+                                                {appointment.date}
                                             </TableCell>
-                                            <TableCell align="center">{appointment.DoctorName + appointment.DoctorSurname}</TableCell>
-                                            <TableCell align="center">{appointment.Treat}</TableCell>
+                                            <TableCell align="center">{appointment.doctorName + appointment.doctorSurname}</TableCell>
+                                            <TableCell align="center">{appointment.treat}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -108,7 +101,7 @@ export const MainPageForPatient = () => {
                     </div>
                 </>
             ) : (
-                <Typography variant="h5">No appointments found!</Typography>
+                <Typography align="center" variant="h5">No appointments found!</Typography>
             )}
 
         </>
