@@ -14,6 +14,7 @@ import {
     Typography
 } from "@mui/material";
 import ReactToPrint from "react-to-print";
+import { TreatmentApi } from "../../client/backend-api/treatment";
 
 export const MainPageForPatient = () => {
     let componentref = useRef()
@@ -33,7 +34,7 @@ export const MainPageForPatient = () => {
 
     const fetchHistory = async () => {
         // !! UNCOMMENT!!
-        // const appointments = await DoctorApi.getAllDoctors()
+        // const appointments = await TreatmentApi.getHistoryOfPatient()
         // setAppointments(appointments)
     }
 

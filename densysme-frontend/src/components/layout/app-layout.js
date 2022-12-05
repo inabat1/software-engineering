@@ -60,7 +60,7 @@ export  const AppLayout = () => {
 
     const handleLogout = () => {
         logoutUser()
-       // handleCloseUserMenu()
+       handleCloseUserMenu()
     }
 
     useEffect(() => {

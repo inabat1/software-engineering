@@ -2,6 +2,7 @@ import {useState, useEffect, createContext, useContext} from "react";
 import {NotificationManager} from "react-notifications"
 import { UserApi } from "../client/backend-api/admin"
 
+
 const UserContext = createContext({
     user : null,
     loginUser: () => {},
@@ -24,13 +25,21 @@ const UserProvider = ( {children} ) => {
     }, [])
 
     const loginUser = async (username, password, index) => {
-        // const {user, error} =
-        console.log(index)
         if(index === 0) {
-            //login as patient
+            await UserApi.userLogin(username, password).then(r =>{
+                NotificationManager.success("Logged in successfully!")
+                setUser(r.data)
+            }).catch(error =>{
+                NotificationManager.error(error)
+            })
 
         } else if(index === 1) {
-            //login as doctor
+            await UserApi.docLogin(username, password).then(r =>{
+                NotificationManager.success("Logged in successfully!")
+                setUser(r.data)
+            }).catch(error =>{
+                NotificationManager.error(error)
+            })
         } else {
             await UserApi.login(username, password).then(r =>{
                 NotificationManager.success("Logged in successfully!")
@@ -39,15 +48,6 @@ const UserProvider = ( {children} ) => {
                 NotificationManager.error(error)
             })
         }
-
-            
-        // if (error) {
-        //     NotificationManager.error(error)
-        // } else {
-        //     NotificationManager.success("Logged in successfully!")
-        //     console.log(user);
-        //     setUser(user)
-        // }
     }
 
     const logoutUser = async () => {
