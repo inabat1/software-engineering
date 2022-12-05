@@ -27,7 +27,6 @@ import {PatientsDetails} from "../details/patients_details";
 import {DoctorsDetails} from "../details/doctors_details";
 import { ScheduleList } from "../list/schedule-list";
 import { Confirmation} from "../details/confirmation";
-import {ConfirmList} from "../list/confirm-list"
 
 
 export  const AppLayout = () => {
@@ -45,8 +44,8 @@ export  const AppLayout = () => {
         navigate("/")
     }
 
-    const handleLoginSubmit = (username, password) => {
-        loginUser(username, password)
+    const handleLoginSubmit = (username, password, index) => {
+        loginUser(username, password, index)
         setOpenLoginDialog(false)
     }
 
@@ -149,24 +148,12 @@ export  const AppLayout = () => {
                     </WithLoginProtector>}
                        exact
                 />
-                <Route path="admin/doctors" element={
-                    <WithLoginProtector>
-                        <DoctorsList/>
-                    </WithLoginProtector>}
-                       exact
-                />
-                 <Route path="admin/confirmlist" element={
-                    <WithLoginProtector>
-                        <ConfirmList/>
-                    </WithLoginProtector>}
-                       exact
-                />
                 <Route path="admin/schedule" element={
                     <ScheduleList/>
              }
 />
                 <Route 
-                   path="admin/confirmation/:doctorId/:appointmentDay" 
+                   path='/admin/confirmation/:doctorId/:appointmentDay'
                    element={<Confirmation/>}
                 />
                 <Route

@@ -23,14 +23,23 @@ const UserProvider = ( {children} ) => {
         }).catch(console.error)
     }, [])
 
-    const loginUser = async (username, password) => {
-        // const {user, error} = 
-        await UserApi.login(username, password).then(r =>{
-            NotificationManager.success("Logged in successfully!")
-            setUser(r.data)
-        }).catch(error =>{
-            NotificationManager.error(error)
-        })
+    const loginUser = async (username, password, index) => {
+        // const {user, error} =
+        console.log(index)
+        if(index === 0) {
+            //login as patient
+
+        } else if(index === 1) {
+            //login as doctor
+        } else {
+            await UserApi.login(username, password).then(r =>{
+                NotificationManager.success("Logged in successfully!")
+                setUser(r.data)
+            }).catch(error =>{
+                NotificationManager.error(error)
+            })
+        }
+
             
         // if (error) {
         //     NotificationManager.error(error)

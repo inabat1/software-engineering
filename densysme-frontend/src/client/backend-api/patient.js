@@ -3,7 +3,7 @@ const ENDPOINT = "http://localhost:8000"
 
 export const PatientApi = {
     getAllPatients: async () => {
-        const res = await await axios.get(ENDPOINT + '/api/users').then((r) =>{
+        const res = await axios.get(ENDPOINT + '/api/users').then((r) => {
             return r.data
         })
         return res
