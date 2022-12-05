@@ -48,20 +48,26 @@ export  const AppLayout = () => {
         setAnchorElUser(null)
         if(index === 0) {
             navigate(`/patient/${response}`)
-            console.log("for patient")
         } else if(index === 1) {
-            // for doctor
+            navigate(`/doctors/${response}`)
         } else if(index === 2){
             navigate("/admin/")
         } else {
-            console.log("for ")
             navigate('/')
         }
     }
 
     const navigateToPersonalPage = () => {
         //vremenno
-        handleCloseUserMenu()
+        setAnchorElUser(null)
+        console.log(index)
+        if(index === 0) {
+            navigate(`/admin/patients/${response}`)
+        } else if(index === 1) {
+            navigate(`/admin/doctors/${response}`)
+        } else if(index === 2){
+            navigate("/admin/")
+        }
     }
 
     const handleLoginSubmit = async (username, password, index) => {
@@ -85,7 +91,6 @@ export  const AppLayout = () => {
         console.log(index)
         if(index === 0) {
             navigate(`/patient/${response}`)
-            console.log("for patient")
         } else if(index === 1) {
             // for doctor
         } else if(index === 2){
