@@ -9,4 +9,5 @@ type Treatments struct {
 	DoctorName    string `json:"doctorName"`
 	DoctorSurname string `json:"doctorSurname"`
 	Treat         string `gorm:"text" json:"treat"`
+	Date          string `json:"date"`
 }

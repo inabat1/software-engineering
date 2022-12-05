@@ -27,6 +27,27 @@ export const UserApi = {
         })
         return res
     },
+    userLogin: async (username, password) => {
+        let data = {"username": username, "password": password}
+        const res = await axios({
+            method: "post",
+            url: ENDPOINT + "/user-login",
+            data: JSON.stringify(data),
+            headers: { "Content-Type": "application/json" },
+        })
+        console.log(res);
+        return res
+    },
+    docLogin: async (username, password) => {
+        let data = {"username": username, "password": password}
+        const res = await axios({
+            method: "post",
+            url: ENDPOINT + "/doc-login",
+            data: JSON.stringify(data),
+            headers: { "Content-Type": "application/json" },
+        })
+        return res
+    },
 }
 
 // module.exports = { UserApi }

@@ -236,6 +236,36 @@ func PostAppointment(c *fiber.Ctx) error {
 
 	return c.JSON(app)
 }
+func appT(time int) string {
+	ans := ""
+
+	if time > 19 {
+		ans = ans + "Fri, "
+	} else if time > 14 {
+		ans += "Thu, "
+	} else if time > 9 {
+		ans += "Wed, "
+	} else if time > 4 {
+		ans += "Tue, "
+	} else {
+		ans += "Mon, "
+	}
+
+	y := time % 5
+	if y == 0 {
+		ans += "9:00"
+	} else if y == 1 {
+		ans += "10:00"
+	} else if y == 2 {
+		ans += "11:00"
+	} else if y == 3 {
+		ans += "12:00"
+	} else if y == 4 {
+		ans += "13:00"
+	}
+
+	return ans
+}
 
 // func to get req (Admin)
 func GetAppointment(c *fiber.Ctx) error {
@@ -276,6 +306,7 @@ func UpdateAppointment(c *fiber.Ctx) error {
 	treat.UserSurname = app.UserSurname
 	treat.DoctorName = app.DoctorName
 	treat.DoctorSurname = app.DoctorSurname
+	treat.Date = appT(int(app.AppTime))
 
 	database.DB.Create(&treat)
 
