@@ -19,6 +19,7 @@ export const TreatmentApi = {
         const res =  await axios.get(ENDPOINT + "/api/med/all").then(r => {
             return r.data
         })
+        console.log(res);
         return res
     },
     updateTreatment: async (treatId, data) =>{ //data is the treatment data
