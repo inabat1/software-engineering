@@ -111,6 +111,17 @@ export const MainPage = () => {
                         <PeopleIcon/>
                     </IconButton>
                 </Item>
+                <Item>
+                    <Typography>
+                        Records
+                    </Typography>
+                    <IconButton
+                        aria-label="doctors"
+                        component={RouterLink}
+                        to={'admin/records'}>
+                        <PeopleIcon/>
+                    </IconButton>
+                </Item>
             </Box>
         </div>
     );

@@ -27,6 +27,8 @@ import {DoctorsDetails} from "../details/doctors_details";
 import {ScheduleList} from "../list/schedule-list";
 import {Confirmation} from "../details/confirmation";
 import {MainPageForPatient} from "../main-pages/mainpage-for-patient";
+import { RecordsOfAllDocs } from "../list/records-list"
+import { ConfirmList } from "../list/confirm-list"
 
 
 export  const AppLayout = () => {
@@ -173,6 +175,12 @@ export  const AppLayout = () => {
                     </WithLoginProtector>}
                        exact
                 />
+                <Route path="admin/confirmlist" element={
+                    <WithLoginProtector>
+                        <ConfirmList/>
+                    </WithLoginProtector>}
+                       exact
+                />
                 <Route path="admin/schedule" element={
                     <ScheduleList/>}
                 />
@@ -207,6 +215,14 @@ export  const AppLayout = () => {
                 <Route
                     path="/patient/:patientId"
                     element={<MainPageForPatient/>}
+                />
+                <Route
+                    path="/admin/records"
+                    element={
+                        <WithLoginProtector>
+                            <RecordsOfAllDocs/>
+                        </WithLoginProtector>
+                    }
                 />
 
             </Routes>
