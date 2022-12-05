@@ -46,12 +46,21 @@ export  const AppLayout = () => {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null)
-        navigate("/")
+        if(index === 0) {
+            navigate(`/patient/${response}`)
+            console.log("for patient")
+        } else if(index === 1) {
+            // for doctor
+        } else if(index === 2){
+            navigate("/admin/")
+        } else {
+            console.log("for ")
+            navigate('/')
+        }
     }
 
     const navigateToPersonalPage = () => {
         //vremenno
-        navigate("/")
         handleCloseUserMenu()
     }
 
