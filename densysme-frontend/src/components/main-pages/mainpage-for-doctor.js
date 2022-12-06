@@ -1,8 +1,8 @@
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import classes from "./styles.module.css";
 import { Modal} from 'react-bootstrap';
 import {
-    Button,
+    Button, Card, CardActions, CardContent, Container, FormControl, FormGroup,
     Paper,
     Table,
     TableBody,
@@ -10,38 +10,43 @@ import {
     TableContainer,
     TableHead,
     TablePagination,
-    TableRow,
+    TableRow, TextField,
     Typography
 } from "@mui/material";
-import {Link as RouterLink} from "react-router-dom";
+import {Link as RouterLink, useNavigate, useParams} from "react-router-dom";
 import {TreatmentForm} from "../main-pages/treatment-form";
+import {TreatmentApi} from "../../client/backend-api/treatment";
 //import { TreatmentApi } from "../../client/backend-api/treatment";
 
 export const MainPageForDoctors = () => {
-    const [appointments, setAppointments] = useState([
-        {   "id":  "123",
-            "userName": "hasoos",
-            "userSurname": "jasn",
-            "IINnum": "456",
-            "DoctorId " : "789",
-            "DoctorName": "Tom",
-            "DoctorSurname": "Alison",
-            "treat": "paracetomol",
-            "date": "12/12/22"}
-    ])       //change to []
+    const {docId} = useParams()
+    const [appointments, setAppointments] = useState([])       //change to []
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(10)
+    const [activeApp, setActiveApp] = useState("")
+    const [treat, setTreat] = useState("");
+    const [openModal, setOpenModal] = useState(false)
+    const navigate = useNavigate()
+    console.log(openModal)
+
+    const handleChange = async(e) => {
+        setTreat(e.target.value)
+    }
+
+    const updateTreat = async(id, treat) => {
+        const response = await TreatmentApi.updateTreatment(id, treat)
+        console.log(response)
+    }
 
 
     const fetchPatients = async (docId) => {
-        // !! UNCOMMENT!!
-        // const appointments = await TreatmentApi.getAppsOfDoc(docId)
-        // setAppointments(appointments)
+        const appointments = await TreatmentApi.getAppsOfDoc(docId)
+        setAppointments(appointments)
     }
 
 
     useEffect(() => {
-        fetchPatients().catch(console.error)
+        fetchPatients(docId).catch(console.error)
     }, [])
 
     const [show, setShow] = useState(false);
@@ -69,7 +74,6 @@ export const MainPageForDoctors = () => {
                                         <TableCell>Patient Name</TableCell>
                                         <TableCell align="right">Patient Surname</TableCell>
                                         <TableCell align="right">Patient IIN</TableCell>
-                                        <TableCell align="right">Appointment Time</TableCell>
                                         <TableCell> Treatment </TableCell>
                                         <TableCell> Edit treatment </TableCell>
 
@@ -84,17 +88,20 @@ export const MainPageForDoctors = () => {
                                             <TableCell align="right">{appointment.userName}</TableCell>
                                             <TableCell align="right">{appointment.userSurname}</TableCell>
                                             <TableCell align="right">{appointment.IINnum}</TableCell>
-                                            <TableCell align="right">{appointment.date}</TableCell>
                                             <TableCell align="right">{appointment.treat}</TableCell>
                                             <TableCell>
                                                 <div className={classes.actionsContainer}>
                                                 <Button
                                                         variant="contained"
                                                         color="primary"
-                                                      //  component={RouterLink}
                                                         size="small"
-                                                      //  to={`/admin/treatment/${appointment.id}/edit`}
-                                                      onClick={handleShow} 
+                                                      onClick={
+                                                          (e) => {
+                                                              setActiveApp(appointment.id)
+                                                              setTreat(appointment.treat)
+                                                              handleShow()
+                                                          }
+                                                      }
                                                     >
                                                         Edit
                                                     </Button>
@@ -117,16 +124,24 @@ export const MainPageForDoctors = () => {
                             onPageChange={(e, newPage) => setPage(newPage)}
                         />
                     </div>
-                 <Modal show={show} onHide={handleClose}>
-                 <Modal.Body>
-                 <TreatmentForm theappointment={appointments} />
-                 </Modal.Body>
-                 <Modal.Footer>
-                </Modal.Footer>
-                </Modal>
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>
+                                Edit Treatment
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <TreatmentForm theappointment={appointments} />
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
                 </>
             ) : (
-                <Typography variant="h5">No appointment found!</Typography>
+                <Typography variant="h5" align="center">No appointment found!</Typography>
             )}
         </>
     )

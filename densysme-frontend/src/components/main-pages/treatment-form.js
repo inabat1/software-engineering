@@ -20,17 +20,19 @@ import classes from "./styles.module.css"
 dayjs.extend(utc)
 
 export const TreatmentForm = ({theappointment}) => {
-    const id= theappointment.id
+    const id= theappointment
     const navigate = useNavigate()
     const [treat, setTreat] = useState(theappointment.treat);
+    const [openModal, setOpenModal] = useState(false)
 
     const handleChange = async(e) => {
-        const treat = e.target.value
-        const response = await TreatmentApi.updateTreatment(id, treat).then(() => navigate(`doctor/mainpage`))
-        console.log(response)
-        setTreat(treat)
+        setTreat(e.target.value)
     }
 
+    const updateTreat = async(id, treat) => {
+        const response = await TreatmentApi.updateTreatment(id, treat)
+        console.log(response)
+    }
 
     return (
         <>
@@ -55,12 +57,19 @@ export const TreatmentForm = ({theappointment}) => {
                             variant="contained"
                             color="secondary"
                             onClick={() => {
-                                navigate(`doctor/mainpage`)
+                                navigate(`/doctor`)
+
                             }}
                         >
                             Cancel
                         </Button>
-                        <Button type="submit" variant="contained" color="primary">
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                        onClick={
+                            updateTreat(id, treat)
+                        }>
                             Submit
                         </Button>
                     </div>

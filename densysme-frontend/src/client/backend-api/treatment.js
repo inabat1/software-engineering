@@ -24,11 +24,12 @@ export const TreatmentApi = {
     },
     updateTreatment: async (treatId, data) =>{ //data is the treatment data
         let treatData = {"treat": data}
-        await axios({
+        const response = await axios({
             method: "post",
             url: ENDPOINT + "/api/treat/" + treatId,
             data: JSON.stringify(treatData),
             headers: { "Content-Type": "application/json" },
         })
+        return response.data
     }
 }

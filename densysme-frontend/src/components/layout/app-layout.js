@@ -31,6 +31,7 @@ import { RecordsOfAllDocs } from "../list/records-list"
 import { ConfirmList } from "../list/confirm-list"
 import {MainPageForAdmin} from "../main-pages/mainpage-for-admin";
 import {alignProperty} from "@mui/material/styles/cssUtils";
+import {MainPageForDoctors} from "../main-pages/mainpage-for-doctor";
 
 
 export  const AppLayout = () => {
@@ -93,9 +94,9 @@ export  const AppLayout = () => {
         if(index === 0) {
             navigate(`/patient/${response}`)
         } else if(index === 1) {
-            // for doctor
+            navigate(`/doctor/${response}`)
         } else if(index === 2){
-            navigate("/admin/")
+            navigate(`/doctor/${response}`)
         } else {
             console.log("for ")
             navigate('/')
@@ -260,6 +261,12 @@ export  const AppLayout = () => {
                     path="/admin"
                     element={<MainPageForAdmin/>}
                 />
+
+                <Route
+                    path="/doctor/:docId"
+                    element={<MainPageForDoctors/>}
+                />
+
 
             </Routes>
             <LoginDialog
