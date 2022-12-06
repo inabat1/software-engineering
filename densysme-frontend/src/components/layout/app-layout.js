@@ -30,6 +30,7 @@ import {MainPageForPatient} from "../main-pages/mainpage-for-patient";
 import { RecordsOfAllDocs } from "../list/records-list"
 import { ConfirmList } from "../list/confirm-list"
 import {MainPageForAdmin} from "../main-pages/mainpage-for-admin";
+import {alignProperty} from "@mui/material/styles/cssUtils";
 
 
 export  const AppLayout = () => {
@@ -112,7 +113,7 @@ export  const AppLayout = () => {
                                 variant="h6"
                                 noWrap
                                 sx={{
-                                    mr: 2,
+                                    mr: 1,
                                     display: "flex",
                                     fontFamily: "monospace",
                                     fontWeight: 700,
@@ -123,11 +124,31 @@ export  const AppLayout = () => {
                                 DenSys.me
                             </Typography>
                         </Link>
+
+
                         <Box
                             sx={{
+                                display: "flex",
                                 flexGrow: 0,
+                                flexDirection: "row",
+                                p: 1,
+                                m: 1
                             }}
                         >
+                            <Button
+                                    onClick={() => {
+                                        navigate("/")
+                                    }}
+                                    sx={{ my: 2, color: "white", display: "block" }}
+                            >
+                                Home
+                            </Button>
+                            <Button href="#about"
+                                    sx={{ my: 2, mr: 3, color: "white", display: "block", whiteSpace: "nowrap" }}
+                            >
+                                About us
+                            </Button>
+
 
                             {user ? (
                                 <>
