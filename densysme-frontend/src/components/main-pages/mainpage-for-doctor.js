@@ -118,18 +118,10 @@ export const MainPageForDoctors = () => {
                         />
                     </div>
                  <Modal show={show} onHide={handleClose}>
-                 <Modal.Header closeButton>
-                 <Modal.Title>
-                 Edit Treatment
-                 </Modal.Title>
-                 </Modal.Header>
                  <Modal.Body>
                  <TreatmentForm theappointment={appointments} />
                  </Modal.Body>
                  <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
                 </Modal.Footer>
                 </Modal>
                 </>
