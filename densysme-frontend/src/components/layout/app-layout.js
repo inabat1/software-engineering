@@ -30,6 +30,7 @@ import {MainPageForPatient} from "../main-pages/mainpage-for-patient";
 import { RecordsOfAllDocs } from "../list/records-list"
 import { ConfirmList } from "../list/confirm-list"
 import {MainPageForAdmin} from "../main-pages/mainpage-for-admin";
+import {MainPageForDoctors} from "../main-pages/mainpage-for-doctor";
 
 
 export  const AppLayout = () => {
@@ -238,6 +239,10 @@ export  const AppLayout = () => {
                 <Route
                     path="/admin"
                     element={<MainPageForAdmin/>}
+                />
+                <Route
+                    path="doctor/mainpage"
+                    element={<MainPageForDoctors/>}
                 />
 
             </Routes>
