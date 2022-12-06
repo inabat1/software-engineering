@@ -24,8 +24,10 @@ export const TreatmentForm = ({theappointment}) => {
     const navigate = useNavigate()
     const [treat, setTreat] = useState(theappointment.treat);
 
-    const updateTreat = (id, treat ) => {
-        TreatmentApi.updateTreatment(id, treat) .then(() => navigate(`doctor/mainpage`))
+    const handleChange = async(e) => {
+        const treat = e.target.value
+        const response = await TreatmentApi.updateTreatment(id, treat).then(() => navigate(`doctor/mainpage`))
+        console.log(response)
         setTreat(treat)
     }
 
@@ -44,7 +46,7 @@ export const TreatmentForm = ({theappointment}) => {
                                 treat="treat"
                                 required
                                 value={treat}
-                                onChange={updateTreat}
+                                onChange={handleChange}
                             />
                         </FormControl>
                     </FormGroup>
